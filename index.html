@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones de Computadoras</title>
+    <link rel="stylesheet" type="text/css" href="Style.css">
+</head>
+<body>
+ <!-- Contenedor principal del chatbox -->
+ <div class="chatbox-container">
+    <!-- Encabezado del chatbox -->
+    <div class="chatbox-header">
+        <h3>Recomendaciones de Computadoras</h3>
+    </div>
+    <!-- Área donde se mostrarán los mensajes -->
+    <div class="chatbox-messages" id="chatbox-messages">
+        <!-- Mensaje de bienvenida del bot -->
+        <div class="message bot-message">¡Hola! ¿Buscas recomendaciones de computadoras? ¿En qué área estás interesado?</div>
+        <!-- Opciones que el usuario puede seleccionar -->
+        <div class="message bot-message">
+            <button onclick="handleOption('Computadora para estudiantes')">Computadora para estudiantes</button>
+            <button onclick="handleOption('Computadora para videojuegos')">Computadora para videojuegos</button>
+            <button onclick="handleOption('Mejor calidad-precio')">Mejor calidad-precio</button>
+            <button onclick="handleOption('¿Cuánto cuesta armar mi propia PC en tu tienda?')">¿Cuánto cuesta armar mi propia PC en tu tienda?</button>
+        </div>
+    </div>
+    <!-- Área de entrada de texto para el usuario -->
+    <div class="chatbox-input">
+        <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+</div>
+</body>
+<script>
+    // Función para enviar mensaje del usuario
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value;
+        const messagesContainer = document.getElementById('chatbox-messages');
+
+        // Si el campo de entrada no está vacío
+        if (userInput.trim() !== "") {
+            // Crear y mostrar el mensaje del usuario
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.textContent = userInput;
+            messagesContainer.appendChild(userMessage);
+
+            // Respuesta automática del bot
+            setTimeout(() => {
+                generateBotResponse(userInput);
+            }, 1000);
+
+            // Limpiar el campo de entrada de texto
+            document.getElementById('user-input').value = "";
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    }
+
+    // Función para manejar la selección de opciones predeterminadas
+    function handleOption(option) {
+        const messagesContainer = document.getElementById('chatbox-messages');
+
+        // Crear y mostrar el mensaje de la opción seleccionada
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('message', 'user-message');
+        userMessage.textContent = option;
+        messagesContainer.appendChild(userMessage);
+
+        // Generar respuesta del bot basada en la opción seleccionada
+        setTimeout(() => {
+            generateBotResponse(option);
+        }, 1000);
+
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Función para generar las respuestas automáticas del bot
+    function generateBotResponse(input) {
+        const messagesContainer = document.getElementById('chatbox-messages');
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('message', 'bot-message');
+
+        // Lógica para determinar la respuesta basada en el input del usuario
+        if (input.toLowerCase().includes("computadora para estudiantes")) {
+            botMessage.textContent = "Te recomiendo la Acer Aspire 5: Ryzen 5, 8GB RAM, 256GB SSD. Perfecta para tareas de estudiantes.";
+        } else if (input.toLowerCase().includes("computadora para videojuegos")) {
+            botMessage.textContent = "Para gaming, te sugiero la HP Pavilion Gaming: Intel Core i5, GTX 1650, 16GB RAM.";
+        } else if (input.toLowerCase().includes("mejor calidad-precio")) {
+            botMessage.textContent = "Lenovo IdeaPad Gaming 3: Ryzen 5, GTX 1650, 16GB RAM, una gran opción por su costo.";
+        } else if (input.toLowerCase().includes("cuánto cuesta armar mi propia pc en tu tienda")) {
+            botMessage.textContent = "El costo de armar tu propia PC depende de los componentes que elijas. ¡Contáctanos para más detalles!";
+        } else {
+            botMessage.textContent = "Lo siento, no entiendo tu pregunta. ¿Podrías reformularla?";
+        }
+
+        messagesContainer.appendChild(botMessage);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Pregunta al usuario si desea más información y carga el menú principal
+        setTimeout(() => {
+            askForMoreInfo();
+        }, 1500);
+    }
+
+    // Función para preguntar si se desea más información
+    function askForMoreInfo() {
+        const messagesContainer = document.getElementById('chatbox-messages');
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('message', 'bot-message');
+
+        botMessage.textContent = "¿Te gustaría más recomendaciones?";
+        messagesContainer.appendChild(botMessage);
+
+        // Cargar el menú principal con opciones
+        const optionsMessage = document.createElement('div');
+        optionsMessage.classList.add('message', 'bot-message');
+        optionsMessage.innerHTML = `
+            <button onclick="handleOption('Computadora para estudiantes')">Computadora para estudiantes</button>
+            <button onclick="handleOption('Computadora para videojuegos')">Computadora para videojuegos</button>
+            <button onclick="handleOption('Mejor calidad-precio')">Mejor calidad-precio</button>
+            <button onclick="handleOption('¿Cuánto cuesta armar mi propia PC en tu tienda?')">¿Cuánto cuesta armar mi propia PC en tu tienda?</button>
+        `;
+        messagesContainer.appendChild(optionsMessage);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+</script>
+<footer>
+    &copy;Jhonnatan david fajardo castañeda
+</footer>
+</html>
